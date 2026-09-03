@@ -2,22 +2,6 @@
 
 declare(strict_types=1);
 
-/*
-CREATE DATABASE IF NOT EXISTS `biblioteca_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-
-CREATE TABLE IF NOT EXISTS `libros` (
-    `id` INT PRIMARY KEY AUTO_INCREMENT,
-    `titulo` VARCHAR(100) NOT NULL,
-    `autor` VARCHAR(100) NOT NULL,
-    `precio` DECIMAL(8, 2) NOT NULL
-);
-
-INSERT INTO `libros` (`titulo`, `autor`, `precio`) VALUES
-('Asado Argentino', 'Lucía Aibar Blanco', 120.30),
-('El Precio Justo', 'Lita', 49.90),
-('PHP 123', 'Michael Jordan', 22.33);
-*/
-
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Cache-Control: post-check=0, pre-check=0', false);
