@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD con API en PHP + PDO MySQL</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #ccc;
+        font-family: sans-serif;
+      }
+      header {
+        font-size: larger;
+        font-weight: bold;
+        padding: 1rem;
+      }
+      footer {
+        padding: 0.5rem;
+      }
+      header,
+      footer {
+        background-color: #555;
+        color: #f0fff0;
+        text-align: center;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+      }
+      .row {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+      }
+      .col {
+        flex: 1;
+        background-color: #e0f0e0;
+        padding: 10px;
+        border: 1px solid #999;
+      }
+      .col:hover {
+        background-color: #f0fff0;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+      }
+      input {
+        display: block;
+      }
+      a {
+        color: #f0fff0;
+        text-decoration: none;
+      }
+      button {
+        background-color: #88c;
+        color: #fff;
+        padding: 0.25rem 0.5rem;
+      }
+      td,
+      th {
+        padding: 0 10px;
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>CRUD con API en PHP + PDO MySQL</header>
+
+    <main>
+      <div class="row">
+        <div class="col">
+          <h3>Listar todos los libros</h3>
+          <form id="getAllForm">
+            <button type="submit">Ejecutar</button>
+            <table class="info">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Precio</th>
+                </tr>
+              </thead>
+              <tbody id="getAllInfo"></tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <h3>Obtener información de un libro</h3>
+          <form id="getByIdForm">
+            <input type="number" value="" name="id" placeholder="id" />
+            <button type="submit">Ejecutar</button>
+            <div class="info" id="getByIdInfo"></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <h3>Agregar libro</h3>
+          <form id="addForm">
+            <input type="text" value="" name="titulo" placeholder="titulo" />
+            <input type="text" value="" name="autor" placeholder="autor" />
+            <input type="text" value="" name="precio" placeholder="precio" />
+            <button type="submit">Ejecutar</button>
+            <div class="info" id="addInfo"></div>
+          </form>
+        </div>
+
+        <div class="col">
+          <h3>Actualizar libro</h3>
+          <form id="updateForm">
+            <input type="number" value="" name="id" placeholder="id" />
+            <input type="text" value="" name="titulo" placeholder="titulo" />
+            <input type="text" value="" name="autor" placeholder="autor" />
+            <input type="text" value="" name="precio" placeholder="precio" />
+            <button type="submit">Ejecutar</button>
+            <div class="info" id="updateInfo"></div>
+          </form>
+        </div>
+
+        <div class="col">
+          <h3>Eliminar libro</h3>
+          <form id="deleteForm">
+            <input type="hidden" name="accion" value="delete" />
+            <input type="number" value="" name="id" placeholder="id" />
+            <button type="button" id="deleteFormSubmitButton">Ejecutar</button>
+            <div class="info" id="deleteInfo"></div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <a href="https://www.luciaaibarblanco.com" target="_blank">www.luciaaibarblanco.com</a>
+    </footer>
+
+    <script>
+      async function sendRequest(accion, formElement, infoDivElement) {
+        try {
+          const data = Object.fromEntries(new FormData(formElement));
+          data.accion = accion;
+          const response = await fetch("api.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams(data),
+          });
+          const respuesta = await response.json();
+          infoDivElement.innerHTML = respuesta.texto;
+        } catch (error) {
+          infoDivElement.textContent = "ERROR inesperado";
+        }
+      }
+
+      function onSubmit(accion, formId, infoDivId) {
+        const formElement = document.getElementById(formId);
+        const infoDivElement = document.getElementById(infoDivId);
+        formElement.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          await sendRequest(accion, formElement, infoDivElement);
+        });
+      }
+
+      document.getElementById("deleteFormSubmitButton").addEventListener("click", async (e) => {
+        if (confirm("Eliminar ?")) {
+          const formElement = document.getElementById("deleteForm");
+          const infoDivElement = document.getElementById("deleteInfo");
+          await sendRequest("delete", formElement, infoDivElement);
+        }
+      });
+
+      onSubmit("getAll", "getAllForm", "getAllInfo");
+      onSubmit("getById", "getByIdForm", "getByIdInfo");
+      onSubmit("add", "addForm", "addInfo");
+      onSubmit("update", "updateForm", "updateInfo");
+    </script>
+  </body>
+</html>
