@@ -177,17 +177,16 @@ class LibroRepository implements ILibroRepository
     }
 }
 
-$libroRepository = new LibroRepository();
-
-// Tengo accion ?
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $accion = $_POST['accion'];
-} else {
-    $accion = null;
+// POST requerido
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    die('Invalid request method');
 }
+
+$libroRepository = new LibroRepository();
 
 // Crear resultado según la acción
 $resultado = '';
+$accion = $_POST['accion'];
 switch ($accion) {
     case 'getAll':
         $libros = $libroRepository->getAll();

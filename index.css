@@ -1,0 +1,77 @@
+/* Very Simple CSS style */
+* {
+    box-sizing: content-box;
+}
+
+body {
+    margin: 0;
+    background-color: #ccc;
+    font-family: sans-serif;
+}
+
+header {
+    font-size: larger;
+    font-weight: bold;
+    padding: 1rem;
+}
+
+footer {
+    padding: 0.5rem;
+}
+
+header,
+footer {
+    background-color: #555;
+    color: #f0fff0;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.col {
+    flex: 1;
+    background-color: #e0f0e0;
+    padding: 10px;
+    border: 1px solid #999;
+}
+
+.col:hover {
+    background-color: #f0fff0;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.info {
+    background-color: #eee;
+}
+
+input {
+    display: block;
+}
+
+a {
+    color: #f0fff0;
+    text-decoration: none;
+}
+
+button {
+    background-color: #88c;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+}
+
+td,
+th {
+    padding: 0 10px;
+    text-align: left;
+}

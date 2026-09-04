@@ -15,8 +15,10 @@ A lightweight, modern single-page CRUD web application built with modern **PHP 8
 ## Project Structure
 
 ```text
-├── index.html        # Single Page Application frontend (HTML5 / JS Fetch API)
 ├── api.php           # Backend REST API endpoint, database configuration, and models
+├── index.html        # Single Page Application frontend (HTML5)
+├── index.css         # Very simple CSS style
+├── index.js          # AJAX / Fetch API
 └── README.md         # Documentation
 ```
 
